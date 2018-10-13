@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewpoint" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap-reboot.css">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap-grid.css">
+	<link rel="stylesheet" type="text/css" href="../css/visualization.css">
+	<script type="text/javascript" src="../js/popper.min.js"></script>
+	<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../js/d3.min.js"></script>
+	<script type="text/javascript" src="../js/echarts.min.js"></script>
 	<title>Visualization</title>
 </head>
-<body>
-	
+<body style="background-image: url(../img/background.jpg);">
+	<div class="container-fluid nav">
+		<p class="font-weight-bold text-center">国控数据可视化</p>
+		<img width="32px" height="32px" id="fullscreen" data-toggle="fullscreentips" title="切换全屏" onclick="fullscreen()" src="../img/fullscreen.png" class="float-right img-fluid">
+	</div>
+	<div class="container-fluid row wrapper" >
+		<div class="col-3 frame">
+			<div class="small-block">
+				<div class="title"></div>
+				<div class="content"></div>
+			</div>
+			<div class="small-block">
+				<div class="title"></div>
+				<div class="content"></div>
+			</div>
+			<div class="small-block">
+				<div class="title"></div>
+				<div class="content"></div>
+			</div>
+		</div>
+		<div class="col-9 frame" style="padding: 3px;">
+			<div class="title">
+			</div>
+			<div class="content"></div>
+		</div>
+	</div>
 </body>
+<script type="text/javascript" src="../js/visualization.js"></script>
 </html>
