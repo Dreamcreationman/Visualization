@@ -75,7 +75,6 @@ function showmap(container_id, width, height) {
 		var point = svg.append("g").attr("transform", "translate(0, 0)");
 		d3.csv("http://localhost:8080/VisTaskData/csv/WaterBase.csv").then(function (res) {	
 				// body...
-
 			point.selectAll("circle")
 					.data(res)
 					.enter()
@@ -109,6 +108,7 @@ function showmap(container_id, width, height) {
 						document.getElementById(d.code+"map").setAttribute("r","3");
 						tooltip.style("opacity", 0.0);
 					});
+			getMonthChart("small-view1", 330, 240, 103, "16:00:00", res);
 		});
 
 	})
