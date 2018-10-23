@@ -16,10 +16,10 @@ body {
     font: 14px/21px "Microsoft YaHei";
     text-align: left;
     background-color: rgba(50, 50, 50, 0.7);
-    border-width: 0px;
-    border-color: rgb(51, 51, 51);
+    border-width: 1px;
+    border-color: rgba(233, 233, 233, 0.7);
     border-radius: 4px;
-    padding: 5px;
+    padding: 10px;
     fill: white;
     border-style: solid;
     z-index: 9999999;
@@ -85,6 +85,28 @@ body {
     padding-left: 40px;
     vertical-align: middle;
     display: table-cell;
+}
+
+.title div{
+    display: table-cell;
+    vertical-align: middle;
+    width: 200px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #cfdc00;
+    box-shadow: 0 0 5px rgba(207, 220, 0, 0.4);
+    border-radius: 5px;
+}
+
+.input-group > .form-control{
+    width: 100%;
+    margin-right: 40px;
+    background-color: rgba(240, 240, 240, 0.2);
+    border-width: 0px;
+    font-size: 20pt;
+    color: white;
 }
 
 .content {

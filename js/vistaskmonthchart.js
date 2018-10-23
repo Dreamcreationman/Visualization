@@ -6,6 +6,8 @@ function getMonthChart(viewId, width, height, stationId, time, resBase) {
         .attr("class", "tooltips")
         .attr("opacity", 0.0);
 
+    d3.select("#" + viewId).selectAll('*').remove();
+
     d3.csv("http://localhost:8080/VisTaskData/csv/WaterStation.csv").then(function(res) {
         // body...
         for (var i = 0; i < res.length; i++)

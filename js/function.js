@@ -97,3 +97,12 @@ function fullscreen() {
         exitfullscreen();
     }
 }
+
+function getRegion(res) {
+    // body...
+    var temp = [];
+    for (var i = 0; i < res.length; i++) {
+        temp.push(res[i].basin);
+    }
+    return unique(temp).sort();
+}

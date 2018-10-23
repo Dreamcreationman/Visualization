@@ -1,12 +1,3 @@
-function getRegion(res) {
-    // body...
-    var temp = [];
-    for (var i = 0; i < res.length; i++) {
-        temp.push(res[i].basin);
-    }
-    return unique(temp).sort();
-}
-
 function getNameById(id, res) {
     // body...
     for (var i = 0; i < res.length; i++) {
@@ -14,10 +5,6 @@ function getNameById(id, res) {
             return res[i].name;
         }
     }
-}
-
-function getRegionBy(argument) {
-    // body...
 }
 
 function getInfosByRegion(resBase, resStation) {
@@ -50,8 +37,9 @@ function getRegionChart(view, width, height, resBase, resStation, type) {
         .append("div")
         .attr("class", "tooltips")
         .attr("opacity", 0.0);
+    d3.select("#" + view).selectAll('*').remove();
+
     var res = getInfosByRegion(resBase, resStation);
-    console.log(res);
     var riverRegion = getRegion(resBase);
     var index = [];
     var regionShort = [];
@@ -145,14 +133,18 @@ function getRegionChart(view, width, height, resBase, resStation, type) {
                         .style("left", (d3.event.pageX) + "px")
                         .style("top", (d3.event.pageY + 20) + "px")
                         .style("opacity", 1.0);
-                    d3.select(this).transition().attr("r", "8");
+                    d3.select(this).transition()
+                                    .ease(d3.easeLinear)
+                                    .attr("r", "8");
                 })
                 .on("mouseomove", function() {
                     tooltip.style("left", (d3.event.pageX))
                         .style("top", (d3.event.pageY + 20));
                 })
                 .on("mouseout", function() {
-                    d3.select(this).transition().attr("r", "5");
+                    d3.select(this).transition()
+                                    .ease(d3.easeLinear)
+                                    .attr("r", "5");
                     tooltip.style("opacity", 0.0);
                 });;
         }
