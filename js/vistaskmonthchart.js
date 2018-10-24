@@ -1,4 +1,4 @@
-function getMonthChart(viewId, width, height, stationId, time, resBase) {
+function getMonthChart(viewId, width, height, stationId, time, res) {
     // body...
     var stationChosenData = [];
     var tooltip = d3.select("body")
@@ -8,11 +8,11 @@ function getMonthChart(viewId, width, height, stationId, time, resBase) {
 
     d3.select("#" + viewId).selectAll('*').remove();
 
-    d3.csv("http://localhost:8080/VisTaskData/csv/WaterStation.csv").then(function(res) {
+    d3.csv("http://localhost:8080/VisTaskData/csv/WaterStation.csv").then(function(resBase) {
         // body...
-        for (var i = 0; i < res.length; i++)
-            if (res[i].sta_id == stationId && res[i].sta_time.split(" ")[1] == time) {
-                stationChosenData.push(res[i])
+        for (var i = 0; i < resBase.length; i++)
+            if (resBase[i].sta_id == stationId && resBase[i].sta_time.split(" ")[1] == time) {
+                stationChosenData.push(resBase[i])
             }
         var padding = { top: 20, right: 10, bottom: 10, left: 40 };
         var svg = d3.select("body")
@@ -78,8 +78,8 @@ function getMonthChart(viewId, width, height, stationId, time, resBase) {
                 document.getElementById(d.sta_time + "monthChart").setAttribute("r", "5");
                 tooltip.style("opacity", 0.0);
             });
-        drawRadar("radar", res, stationId, "2015-01-07", time);
-        getRegionChart("region", 350, 240, resBase, res, "sta_toc_v");
+        drawRadar("radar", resBase, StationId, date, time);
+        getRegionChart("region", 350, 240, res, resBase, type);
     });
 
 }

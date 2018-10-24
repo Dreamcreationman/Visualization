@@ -38,7 +38,7 @@
                 </div>
                 <div class="small-block">
                     <div class="title">
-                        <p class="font-weight-bold text-left" id="smallp">Detail Description</p>
+                        <p class="font-weight-bold text-left" id="smallp">Region DataVis</p>
                     </div>
                     <div class="content" id="region"></div>
                 </div>
@@ -46,10 +46,20 @@
             <div class="col-9 frame" style="padding: 3px;">
                 <div class="title">
                     <p class="font-weight-bold text-left">Spatial Visualization</p>
-                    <div class="input-group date form_date col-md-5" data-date="2015-01-01" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd" align="right">
+                    <div data-date-format="yyyy-mm-dd" class="input-group date form_date col-md-5" data-date="2015-01-01" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd" align="right">
                         <input class="form-control" size="16" type="text" value="2015-01-01" readonly>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                    <div class="time col-md-5">
+                        <select class="selectpicker show-tick form-control" style="height: auto"data-live-search="true">
+                            <option>00:00:00</option>
+                            <option>04:00:00</option>
+                            <option>08:00:00</option>
+                            <option>12:00:00</option>
+                            <option>16:00:00</option>
+                            <option>20:00:00</option>
+                          </select>
                     </div>
                 </div>
                 <div class="content" id="big-map"></div>
@@ -62,4 +72,5 @@
 <script type="text/javascript" src="../js/vistaskregion.js"></script>
 <script type="text/javascript" src="../js/vistaskmonthchart.js"></script>
 <script type="text/javascript" src="../js/vistaskmap.js"></script>
+<script type="text/javascript" src="../js/run.js"></script>
 </html>

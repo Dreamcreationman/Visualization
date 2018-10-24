@@ -37,7 +37,7 @@ function getRegionChart(view, width, height, resBase, resStation, type) {
         .append("div")
         .attr("class", "tooltips")
         .attr("opacity", 0.0);
-    d3.select("#" + view).selectAll('*').remove();
+     d3.select("#" + view).selectAll('*').remove();
 
     var res = getInfosByRegion(resBase, resStation);
     var riverRegion = getRegion(resBase);

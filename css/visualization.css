@@ -93,6 +93,12 @@ body {
     width: 200px;
 }
 
+.title > .time{
+    display: table-cell;
+    vertical-align: middle;
+    width: 180px;
+}
+
 input:focus {
     outline: none;
     border-color: #cfdc00;
@@ -105,8 +111,25 @@ input:focus {
     margin-right: 40px;
     background-color: rgba(240, 240, 240, 0.2);
     border-width: 0px;
+    font-size: 21pt;
+    color: white;
+}
+
+.time > .form-control{
+    height: auto;
+    margin-right: 40px;
+    background-color: rgba(240, 240, 240, 0.2);
+    border-width: 0px;
     font-size: 20pt;
     color: white;
+}
+
+.time > .form-control > option{
+    color: black;
+    background-color: rgba(240, 240, 240, 0.2);
+    border-width: 0px;
+    font-size: 15pt;
+    text-align: center;
 }
 
 .content {

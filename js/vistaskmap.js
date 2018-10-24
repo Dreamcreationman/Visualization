@@ -1,20 +1,11 @@
 showmap("big-map", 1000, 800);
-
-$('.form_date').datetimepicker({
-        language:  'fr',
-        weekStart: 1,
-        todayBtn:  1,
-		autoclose: true,
-		todayHighlight: 1,
-		startView: 2,
-		minView: 2,
-		forceParse: 0,
-		keyboardNavigation:true
- });
+var date = "2015-01-01"
+var time = "00:00:00";
+var type = "sta_toc_v";
+var StationId = "5";
 
 function showmap(container_id, width, height) {
 	// body...
-	var StationId = "5";
 	var projection = d3.geoMercator()
 						.center([107, 31])
 						.scale(800)
@@ -32,11 +23,11 @@ function showmap(container_id, width, height) {
 					.attr("class", "tooltips")
 					.attr("opacity", 0.0);
 
-	d3.json("http://localhost:8080/VisTaskData/json/china.geo.json").then(function (res) {
+	d3.json("http://localhost:8080/VisTaskData/json/china.geo.json").then(function (ress) {
 		// body...
 		var map = svg.append("g").attr("transform", "translate(0,0)");
 		map.selectAll("path")
-			.data(res.features)
+			.data(ress.features)
 			.enter()
 			.append("path")
 			.attr("stroke", "rgb(111, 111, 111)")
@@ -57,7 +48,7 @@ function showmap(container_id, width, height) {
 			});
 		var text = svg.append("g").attr("transform", "translate(0, 0)");
 		text.selectAll("text")
-			.data(res.features)
+			.data(ress.features)
 			.enter()
 			.append("text")
 			.attr("transform", function(d) {
@@ -75,7 +66,6 @@ function showmap(container_id, width, height) {
 		d3.csv("http://localhost:8080/VisTaskData/csv/WaterBase.csv").then(function (res) {	
 				// body...
 			var color = d3.scaleOrdinal(d3.schemePaired);
-			console.log(getRegion(res));
 			point.selectAll("circle")
 					.data(res)
 					.enter()
@@ -128,14 +118,12 @@ function showmap(container_id, width, height) {
 						if (this.id.split("-")[1] == "unclicked") {
 							d3.select(this).transition()
 	                                    .ease(d3.easeLinear)
-	                                    /*.attr("fill", function() {
-											return color(getRegion(res).indexOf(d.basin)%12);
-										}) 	*/
 	                                    .attr("r", "3");
-							tooltip.style("opacity", 0.0);
 						}
+
+							tooltip.style("opacity", 0.0);
 					});
+			getMonthChart("small-view1", 330, 240, StationId, time, res);
 		});
-		getMonthChart("small-view1", 330, 240, StationId, "16:00:00", res);
-	})
+	});
 }
