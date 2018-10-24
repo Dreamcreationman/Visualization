@@ -1,9 +1,13 @@
 showmap("big-map", 1000, 800);
 var date = "2015-01-01"
 var time = "00:00:00";
-var type = "sta_toc_v";
+var type = "sta_ph_v";
 var StationId = "5";
-
+var resBase, resStation;
+var tooltip = d3.select("body")
+        .append("div")
+        .attr("class", "tooltips")
+        .attr("opacity", 0.0);
 function showmap(container_id, width, height) {
 	// body...
 	var projection = d3.geoMercator()
@@ -17,17 +21,11 @@ function showmap(container_id, width, height) {
 				.attr("width", width)
 				.attr("height", height);
 
-	var tooltip = d3.select("body")
-					.append("div")
-					.attr("id", "map-tooltips")
-					.attr("class", "tooltips")
-					.attr("opacity", 0.0);
-
-	d3.json("http://localhost:8080/VisTaskData/json/china.geo.json").then(function (ress) {
+	d3.json("http://localhost:8080/VisTaskData/json/china.geo.json").then(function (res) {
 		// body...
 		var map = svg.append("g").attr("transform", "translate(0,0)");
 		map.selectAll("path")
-			.data(ress.features)
+			.data(res.features)
 			.enter()
 			.append("path")
 			.attr("stroke", "rgb(111, 111, 111)")
@@ -48,7 +46,7 @@ function showmap(container_id, width, height) {
 			});
 		var text = svg.append("g").attr("transform", "translate(0, 0)");
 		text.selectAll("text")
-			.data(ress.features)
+			.data(res.features)
 			.enter()
 			.append("text")
 			.attr("transform", function(d) {
@@ -65,6 +63,7 @@ function showmap(container_id, width, height) {
 		var point = svg.append("g").attr("transform", "translate(0, 0)");
 		d3.csv("http://localhost:8080/VisTaskData/csv/WaterBase.csv").then(function (res) {	
 				// body...
+			resBase = res;
 			var color = d3.scaleOrdinal(d3.schemePaired);
 			point.selectAll("circle")
 					.data(res)
@@ -83,7 +82,7 @@ function showmap(container_id, width, height) {
 					.on("click", function (d ,i) {
 						// body...
 						StationId = d.code;
-						getMonthChart("small-view1", 330, 240, StationId, "16:00:00", res);
+						getMonthChart("small-view1", 330, 240, StationId, time, res, type);
 						tooltip.style("opacity", 0.0);
 						point.selectAll("circle").attr("r", "3")
 							.attr("fill", "grey")
@@ -123,7 +122,7 @@ function showmap(container_id, width, height) {
 
 							tooltip.style("opacity", 0.0);
 					});
-			getMonthChart("small-view1", 330, 240, StationId, time, res);
+			getMonthChart("small-view1", 330, 240, StationId, time, resBase, type);
 		});
 	});
 }

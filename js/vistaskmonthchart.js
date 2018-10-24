@@ -1,18 +1,15 @@
-function getMonthChart(viewId, width, height, stationId, time, res) {
+function getMonthChart(viewId, width, height, stationId, time, resBase, type) {
     // body...
     var stationChosenData = [];
-    var tooltip = d3.select("body")
-        .append("div")
-        .attr("class", "tooltips")
-        .attr("opacity", 0.0);
 
     d3.select("#" + viewId).selectAll('*').remove();
 
-    d3.csv("http://localhost:8080/VisTaskData/csv/WaterStation.csv").then(function(resBase) {
+    d3.csv("http://localhost:8080/VisTaskData/csv/WaterStation.csv").then(function(res) {
         // body...
-        for (var i = 0; i < resBase.length; i++)
-            if (resBase[i].sta_id == stationId && resBase[i].sta_time.split(" ")[1] == time) {
-                stationChosenData.push(resBase[i])
+        resStation = res;
+        for (var i = 0; i < res.length; i++)
+            if (res[i].sta_id == stationId && res[i].sta_time.split(" ")[1] == time) {
+                stationChosenData.push(res[i])
             }
         var padding = { top: 20, right: 10, bottom: 10, left: 40 };
         var svg = d3.select("body")
@@ -23,8 +20,9 @@ function getMonthChart(viewId, width, height, stationId, time, res) {
         var xScale = d3.scaleLinear()
             .domain([1, 31])
             .range([0, width - padding.left - padding.right]);
+            console.log(maxValue(stationChosenData, type));
         var yScale = d3.scaleLinear()
-            .domain([0, maxValue(stationChosenData, "sta_ph_v")])
+            .domain([minValue(stationChosenData, type), maxValue(stationChosenData, type)])
             .range([height - padding.top - padding.bottom, 0]);
 
         var xAxis = d3.axisBottom().scale(xScale);
@@ -39,7 +37,23 @@ function getMonthChart(viewId, width, height, stationId, time, res) {
                 return xScale(d.sta_time.split(" ")[0].split("-")[2]);
             })
             .y(function(d) {
-                return yScale(d.sta_ph_v);
+                switch (type) {
+                    case "sta_ph_v":
+                        return yScale(d.sta_ph_v);
+                        break;
+                    case "sta_do_v":
+                        return yScale(d.sta_do_v);
+                        break;
+                    case "sta_an_v":
+                        return yScale(d.sta_an_v);
+                        break;
+                    case "sta_toc_v":
+                        return yScale(d.sta_toc_v);
+                        break;
+                    case "sta_pp_v":
+                        return yScale(d.sta_pp_v);
+                        break;
+                }
             })
 
         svg.append("g")
@@ -48,7 +62,25 @@ function getMonthChart(viewId, width, height, stationId, time, res) {
             .attr("d", linePath(stationChosenData))
             .attr("fill", "none")
             .attr("stroke-width", 2)
-            .attr("stroke", "green");
+            .attr("stroke", function() {
+                switch (type) {
+                    case "sta_ph_v":
+                        return "#007bff";
+                        break;
+                    case "sta_do_v":
+                        return "#28a745";
+                        break;
+                    case "sta_an_v":
+                        return "#ffc107";
+                        break;
+                    case "sta_toc_v":
+                        return "#dc3545";
+                        break;
+                    case "sta_pp_v":
+                        return "#17a2b8";
+                        break;
+                }
+            });
 
         svg.append("g")
             .selectAll("circle")
@@ -59,7 +91,25 @@ function getMonthChart(viewId, width, height, stationId, time, res) {
             .attr("transform", function(d) {
                 return "translate("+(xScale(d.sta_time.split(" ")[0].split("-")[2]) + padding.left)+ ","+(yScale(d.sta_ph_v)+ padding.top)+")"
             })
-            .attr("fill", "green")
+            .attr("fill", function() {
+                switch (type) {
+                    case "sta_ph_v":
+                        return "#007bff";
+                        break;
+                    case "sta_do_v":
+                        return "#28a745";
+                        break;
+                    case "sta_an_v":
+                        return "#ffc107";
+                        break;
+                    case "sta_toc_v":
+                        return "#dc3545";
+                        break;
+                    case "sta_pp_v":
+                        return "#17a2b8";
+                        break;
+                }
+            })
             .attr("id", function(d) {
                 return d.sta_time + "monthChart";
             })
@@ -78,8 +128,8 @@ function getMonthChart(viewId, width, height, stationId, time, res) {
                 document.getElementById(d.sta_time + "monthChart").setAttribute("r", "5");
                 tooltip.style("opacity", 0.0);
             });
-        drawRadar("radar", resBase, StationId, date, time);
-        getRegionChart("region", 350, 240, res, resBase, type);
+        drawRadar("radar", res, StationId, date, time);
+        getRegionChart("region", 350, 240, resBase, res, type);
     });
 
 }

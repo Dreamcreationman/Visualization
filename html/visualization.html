@@ -52,17 +52,25 @@
                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                     </div>
                     <div class="time col-md-5">
-                        <select class="selectpicker show-tick form-control" style="height: auto"data-live-search="true">
+                        <select id="time" class="selectpicker show-tick form-control" style="height: auto"data-live-search="true">
                             <option>00:00:00</option>
                             <option>04:00:00</option>
                             <option>08:00:00</option>
                             <option>12:00:00</option>
                             <option>16:00:00</option>
                             <option>20:00:00</option>
-                          </select>
+                        </select>
                     </div>
                 </div>
-                <div class="content" id="big-map"></div>
+                <div class="content" id="big-map">
+                     <div class="btn-group-vertical sample">
+                        <input id="ph" type="button" value="PH" class="btn btn-primary" style="margin-top: -1px;margin-left: 0;" />
+                        <input id="do" type="button" value="溶解氧" class="btn btn-success"/>
+                        <input id="an" type="button" style="color: white"  value="氨氮" class="btn btn-warning"/>
+                        <input id="toc" type="button" value="高猛酸盐" class="btn btn-danger" />
+                        <input id="pp" type="button" value="总有机碳" class="btn btn-info"/>
+                      </div>
+                </div>
             </div>
         </div>
 </body>

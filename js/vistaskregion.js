@@ -33,10 +33,6 @@ function getInfosByRegion(resBase, resStation) {
 
 function getRegionChart(view, width, height, resBase, resStation, type) {
     // body...
-    var tooltip = d3.select("body")
-        .append("div")
-        .attr("class", "tooltips")
-        .attr("opacity", 0.0);
      d3.select("#" + view).selectAll('*').remove();
 
     var res = getInfosByRegion(resBase, resStation);
@@ -116,7 +112,23 @@ function getRegionChart(view, width, height, resBase, resStation, type) {
             var circle = svg.append("g")
                 .append("circle")
                 .attr("fill", function() {
-                    return "#000";
+                    switch (type) {
+                        case "sta_ph_v":
+                            return "#007bff";
+                            break;
+                        case "sta_do_v":
+                            return "#28a745";
+                            break;
+                        case "sta_an_v":
+                            return "#ffc107";
+                            break;
+                        case "sta_toc_v":
+                            return "#dc3545";
+                            break;
+                        case "sta_pp_v":
+                            return "#17a2b8";
+                            break;
+                    }
                 })
                 .attr("id",function() {
                     return i+"_"+j+"_"+avg;

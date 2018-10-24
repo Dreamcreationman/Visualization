@@ -1,25 +1,25 @@
-function drawRadar(ContentId, resBase, stationId, date, time) {
+function drawRadar(ContentId, res, stationId, date, time) {
     // body...
     var date_time = date + " " + time;
     var myChart = echarts.init(document.getElementById(ContentId));
     var dailyData = [];
     var dailyLevel = [];
     var monthData = [];
-    for (var i = 0; i < resBase.length; i++) {
-        if (resBase[i].sta_id == stationId) {
-            monthData.push(resBase[i]);
-            if (resBase[i].sta_time == date_time) {
-                dailyData.push(resBase[i].sta_ph_v);
-                dailyData.push(resBase[i].sta_do_v);
-                dailyData.push(resBase[i].sta_an_v);
-                dailyData.push(resBase[i].sta_toc_v);
-                dailyData.push(resBase[i].sta_pp_v);
+    for (var i = 0; i < res.length; i++) {
+        if (res[i].sta_id == stationId) {
+            monthData.push(res[i]);
+            if (res[i].sta_time == date_time) {
+                dailyData.push(res[i].sta_ph_v);
+                dailyData.push(res[i].sta_do_v);
+                dailyData.push(res[i].sta_an_v);
+                dailyData.push(res[i].sta_toc_v);
+                dailyData.push(res[i].sta_pp_v);
 
-                dailyLevel.push(resBase[i].sta_ph_l);
-                dailyLevel.push(resBase[i].sta_do_l);
-                dailyLevel.push(resBase[i].sta_an_l);
-                dailyLevel.push(resBase[i].sta_toc_l);
-                dailyLevel.push(resBase[i].sta_pp_l);
+                dailyLevel.push(res[i].sta_ph_l);
+                dailyLevel.push(res[i].sta_do_l);
+                dailyLevel.push(res[i].sta_an_l);
+                dailyLevel.push(res[i].sta_toc_l);
+                dailyLevel.push(res[i].sta_pp_l);
             }
         }
     }

@@ -87,13 +87,13 @@ body {
     display: table-cell;
 }
 
-.title div{
+.title div {
     display: table-cell;
     vertical-align: middle;
     width: 200px;
 }
 
-.title > .time{
+.title>.time {
     display: table-cell;
     vertical-align: middle;
     width: 180px;
@@ -106,7 +106,7 @@ input:focus {
     border-radius: 5px;
 }
 
-.input-group > .form-control{
+.input-group>.form-control {
     width: 100%;
     margin-right: 40px;
     background-color: rgba(240, 240, 240, 0.2);
@@ -115,7 +115,7 @@ input:focus {
     color: white;
 }
 
-.time > .form-control{
+.time>.form-control {
     height: auto;
     margin-right: 40px;
     background-color: rgba(240, 240, 240, 0.2);
@@ -124,7 +124,7 @@ input:focus {
     color: white;
 }
 
-.time > .form-control > option{
+.time>.form-control>option {
     color: black;
     background-color: rgba(240, 240, 240, 0.2);
     border-width: 0px;
@@ -140,6 +140,18 @@ input:focus {
     border-bottom-left-radius: 10px;
     padding: 0px;
     margin: 0px;
+}
+
+.content>.sample {
+    position: absolute;
+    right: 150px;
+    bottom: 40px;
+}
+
+.sample>button {
+    width: 10px;
+    height: 8px;
+    margin: 10px;
 }
 
 .axis path,
