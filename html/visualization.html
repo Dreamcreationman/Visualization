@@ -14,7 +14,7 @@
     <script type="text/javascript" src="../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../js/d3.min.js"></script>
     <script type="text/javascript" src="../js/echarts.min.js"></script>
-    <script type="text/javascript" src="../js/floatbutton.js"></script>
+    <script type="text/javascript" src="../js/colorbrewer.js"></script>
     <title>Visualization</title>
 </head>
 
@@ -22,7 +22,7 @@
     <div class="container-fluid nav">
         <p class="font-weight-bold text-center">国控数据可视化</p>
         <img width="32px" height="32px" id="fullscreen" data-toggle="fullscreentips" title="切换全屏" onclick="fullscreen()" src="../img/fullscreen.png" class="float-right img-fluid">
-	</div>
+    </div>
         <div class="container-fluid row wrapper">
             <div class="col-3 frame">
                 <div class="small-block">
@@ -53,7 +53,7 @@
                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                     </div>
                     <div class="time col-md-5">
-                        <select id="time" class="selectpicker show-tick form-control" style="height: auto"data-live-search="true">
+                        <select id="time" class="selectpicker show-tick form-control" style="height: auto" data-live-search="true">
                             <option>00:00:00</option>
                             <option>04:00:00</option>
                             <option>08:00:00</option>
@@ -64,18 +64,64 @@
                     </div>
                 </div>
                 <div class="content" id="big-map">
-                     <div class="btn-group-vertical sample">
-                        <input id="ph" type="button" value="PH" class="btn btn-primary" style="margin-top: -1px;margin-left: 0;" />
-                        <input id="do" type="button" value="溶解氧" class="btn btn-success"/>
-                        <input id="an" type="button" style="color: white"  value="氨氮" class="btn btn-warning"/>
+                    <div class="btn-group-vertical sample">
+                        <input id="ph" type="button" value="PH 值" class="btn btn-primary" style="margin-top: -1px;margin-left: 0;" />
+                        <input id="do" type="button" value="溶解氧量" class="btn btn-success" />
+                        <input id="an" type="button" style="color: white" value="氨氮浓度" class="btn btn-warning" />
                         <input id="toc" type="button" value="高锰酸盐" class="btn btn-danger" />
-                        <input id="pp" type="button" value="总有机碳" class="btn btn-info"/>
-                      </div>
+                        <input id="pp" type="button" value="总有机碳" class="btn btn-info" />
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <div class="footer">Power By <a class=".text-center .font-italic" href="https://yank-tenyond.cn/">Yank</a>   &nbsp;&nbsp;&nbsp;@SWUST <a class=".text-center .font-italic" href="http://iotat.swust.edulab.cn/">IOTAT</a></div>
+        <button id="floatbtn" class="btn btn-success btn-circle btn-xl" data-placement="top" data-toggle="popover" data-trigger="hover" data-target="#myModal"></button>
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">国控数据可视化</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        首先灰常感谢您观看<a class=".text-center .font-italic" href="https://yank-tenyond.cn/" target="_blank"> Yank </a>的国控数据可视化作品（欢迎在Github上给我个Star：<a class=".text-center .font-italic" href="https://github.com/Dreamcreationman/Visualization" target="_blank"> Github传送门 </a>），其中有一些重要的问题需要指出：</br></br>
+                        <code>1. 框架：</code>
+                        主要使用bootstrap和d3构建整体框架和动画过渡（时间问题没做多少），部分视图采用echart绘制，采用colorbrewer作为主要配色方案。</br>
+                        <code>2. 提示：</code>
+                        <table border="1">
+                            <tr>
+                                <td>Spatial Visualization视图</td>
+                                <td>该视图展示水控站点的空间位置信息</td>
+                            </tr>
+                            <tr>
+                                <td>Monthly ChartVis视图</td>
+                                <td>该视图展示选定站点一个月以来的选定指标的日均值变化情况</td>
+                            </tr>
+                            <tr>
+                                <td>Daily RadarVis视图</td>
+                                <td>该视图展示了选定站点选定时间点的各个指标的情况</td>
+                            </tr>
+                            <tr>
+                                <td>Region DataVis视图</td>
+                                <td>该视图展示了各个流域的选定指标的月平均情况</td>
+                            </tr>
+                        </table>
+                        <code>3. 总结：</code>
+                        <dl>
+                            <dt>数据获取</dt>
+                            <dd>· chrome不支持本地file协议，所以自建Apache服务器，前两天是解决了跨域问题，怎么一段时间没用貌似又抽风了！所以改成了本地版本，经测试，Hbuilder和Edge可以正常显示部分视图，最佳适配方案为自行部署本地服务器（见附件，或：<a class=".text-center .font-italic" href="https://github.com/Dreamcreationman/VisTaskData" target="_blank"> Github传送门 </a>）</dd>
+                            <dt>数据处理</dt>
+                            <dd>· 由于能力、时间等原因，本次数据可视化未作数据清洗工作，导致部分数据锚点错误甚至console报错，敬请谅解！</dd>
+                            <dt>可视化展示</dt>
+                            <dd>· 开始想用响应式布局，但是越到后面越懵逼，现在只是尽量做了适配，经测试在分辨率为1920*1080， 1366*768显示器显示较为正常！</dd>
+                        </dl>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">Power By <a target="_blank" class=".text-center .font-italic" href="https://yank-tenyond.cn/">Yank</a>@SWUST <a class=".text-center .font-italic" href="http://iotat.swust.edulab.cn/ target="_blank""> IOTAT</a></div>
 </body>
 <script type="text/javascript" src="../js/function.js"></script>
 <script type="text/javascript" src="../js/bootstrap-datetimepicker.js"></script>
@@ -84,4 +130,6 @@
 <script type="text/javascript" src="../js/vistaskmonthchart.js"></script>
 <script type="text/javascript" src="../js/vistaskmap.js"></script>
 <script type="text/javascript" src="../js/run.js"></script>
+<script type="text/javascript" src="../js/floatbutton.js"></script>
+
 </html>

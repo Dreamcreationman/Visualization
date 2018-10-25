@@ -1,3 +1,8 @@
+function color(i) {
+    // body...
+    return colorbrewer.Set3[12][i];
+}
+
 function getDate(date) {
     var y = date.getFullYear();
     var m = date.getMonth() + 1;
@@ -12,6 +17,24 @@ function getNameById(id, res) {
     for (var i = 0; i < res.length; i++) {
         if (res[i].code == id) {
             return res[i].name;
+        }
+    }
+}
+
+function getInfoById(id, res) {
+    // body...
+    for (var i = 0; i < res.length; i++) {
+        if (res[i].code == id) {
+            return res[i];
+        }
+    }
+}
+
+function getBasinById(id, res) {
+    // body...
+    for (var i = 0; i < res.length; i++) {
+        if (res[i].code == id) {
+            return res[i].basin;
         }
     }
 }
@@ -36,6 +59,27 @@ function getInfosByRegion(resBase, resStation) {
         infos.push(region);
     }
     return infos;
+}
+
+function getStandardname(type) {
+    // body...
+    switch (type) {
+        case "sta_ph_v":
+            return "PH 值";
+            break;
+        case "sta_do_v":
+            return "溶解氧量";
+            break;
+        case "sta_an_v":
+            return "氨氮浓度";
+            break;
+        case "sta_toc_v":
+            return "高锰酸盐";
+            break;
+        case "sta_pp_v":
+            return "总有机碳";
+            break;
+    }
 }
 
 function maxValue(data, type) {

@@ -4,6 +4,7 @@ var time = "00:00:00";
 var type = "sta_ph_v";
 var StationId = "5";
 var resBase, resStation;
+// var color = d3.scaleOrdinal(d3.schemePaired);
 var tooltip = d3.select("body")
         .append("div")
         .attr("class", "tooltips")
@@ -64,7 +65,6 @@ function showmap(container_id, width, height) {
 		d3.csv("http://localhost:8080/VisTaskData/csv/WaterBase.csv").then(function (res) {	
 				// body...
 			resBase = res;
-			var color = d3.scaleOrdinal(d3.schemePaired);
 			point.selectAll("circle")
 					.data(res)
 					.enter()

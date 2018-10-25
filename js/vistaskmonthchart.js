@@ -3,7 +3,6 @@ function getMonthChart(viewId, width, height, stationId, time, resBase, type) {
     var stationChosenData = [];
 
     d3.select("#" + viewId).selectAll('*').remove();
-    var color = d3.scaleOrdinal(d3.schemePaired);
     d3.csv("http://localhost:8080/VisTaskData/csv/WaterStation.csv").then(function(res) {
         // body...
         resStation = res;
@@ -21,16 +20,16 @@ function getMonthChart(viewId, width, height, stationId, time, resBase, type) {
             .domain([1, 31])
             .range([0, width - padding.left - padding.right]);
         var yScale = d3.scaleLinear()
-            .domain([minValue(stationChosenData, type) == maxValue(stationChosenData, type)?0:minValue(stationChosenData, type), maxValue(stationChosenData, type)])
+            .domain([minValue(stationChosenData, type) == maxValue(stationChosenData, type) ? 0 : minValue(stationChosenData, type), maxValue(stationChosenData, type)])
             .range([height - padding.top - padding.bottom, 0]);
 
         var xAxis = d3.axisBottom().scale(xScale);
         var yAxis = d3.axisLeft().scale(yScale);
 
         svg.append("g")
-            .attr("transform", "translate(" + padding.left + "," + (height - padding.bottom ) + ")").call(xAxis);
+            .attr("transform", "translate(" + padding.left + "," + (height - padding.bottom) + ")").call(xAxis);
         svg.append("g")
-            .attr("transform", "translate(" + padding.left + "," + (padding.top ) + ")").call(yAxis);
+            .attr("transform", "translate(" + padding.left + "," + (padding.top) + ")").call(yAxis);
 
         var linePath = d3.line().x(function(d) {
                 return xScale(d.sta_time.split(" ")[0].split("-")[2]);
@@ -90,19 +89,19 @@ function getMonthChart(viewId, width, height, stationId, time, resBase, type) {
             .attr("transform", function(d) {
                 switch (type) {
                     case "sta_ph_v":
-                        return "translate("+(xScale(d.sta_time.split(" ")[0].split("-")[2]) + padding.left)+ ","+(yScale(d.sta_ph_v)+ padding.top)+")"
+                        return "translate(" + (xScale(d.sta_time.split(" ")[0].split("-")[2]) + padding.left) + "," + (yScale(d.sta_ph_v) + padding.top) + ")"
                         break;
                     case "sta_do_v":
-                        return "translate("+(xScale(d.sta_time.split(" ")[0].split("-")[2]) + padding.left)+ ","+(yScale(d.sta_do_v)+ padding.top)+")"
+                        return "translate(" + (xScale(d.sta_time.split(" ")[0].split("-")[2]) + padding.left) + "," + (yScale(d.sta_do_v) + padding.top) + ")"
                         break;
                     case "sta_an_v":
-                        return "translate("+(xScale(d.sta_time.split(" ")[0].split("-")[2]) + padding.left)+ ","+(yScale(d.sta_an_v)+ padding.top)+")"
+                        return "translate(" + (xScale(d.sta_time.split(" ")[0].split("-")[2]) + padding.left) + "," + (yScale(d.sta_an_v) + padding.top) + ")"
                         break;
                     case "sta_toc_v":
-                        return "translate("+(xScale(d.sta_time.split(" ")[0].split("-")[2]) + padding.left)+ ","+(yScale(d.sta_toc_v)+ padding.top)+")"
+                        return "translate(" + (xScale(d.sta_time.split(" ")[0].split("-")[2]) + padding.left) + "," + (yScale(d.sta_toc_v) + padding.top) + ")"
                         break;
                     case "sta_pp_v":
-                        return "translate("+(xScale(d.sta_time.split(" ")[0].split("-")[2]) + padding.left)+ ","+(yScale(d.sta_pp_v)+ padding.top)+")"
+                        return "translate(" + (xScale(d.sta_time.split(" ")[0].split("-")[2]) + padding.left) + "," + (yScale(d.sta_pp_v) + padding.top) + ")"
                         break;
                 }
             })
@@ -132,44 +131,48 @@ function getMonthChart(viewId, width, height, stationId, time, resBase, type) {
                 switch (type) {
                     case "sta_ph_v":
                         tooltip.html(
-                                "<div style='text-align:center;color:"+color(x)+"'>"+getNameById(StationId, resBase)+"</div>" +
-                                "时间： " + d.sta_time + "<br/>"+
+                                "<div style='text-align:center;color:" + color((getRegion(resBase).indexOf(getBasinById(StationId, resBase))) % 12) + "'>" + getNameById(StationId, resBase) + "</div>" +
+                                "时间： " + d.sta_time + "<br/>" +
                                 "PH值： " + d.sta_ph_v + "<br/>")
-                                .style("left", (d3.event.pageX) + "px")
-                                .style("top", (d3.event.pageY + 20) + "px")
-                                .style("opacity", 1.0);
+                            .style("left", (d3.event.pageX) + "px")
+                            .style("top", (d3.event.pageY + 20) + "px")
+                            .style("opacity", 1.0);
                         break;
                     case "sta_do_v":
-                        tooltip.html("<div style='text-align:center;color:"+color(x)+"'>"+getNameById(StationId, resBase)+"</div>" +
-                                "时间： " + d.sta_time + "<br/>"+
+                        tooltip.html(
+                                "<div style='text-align:center;color:" + color((getRegion(resBase).indexOf(getBasinById(StationId, resBase))) % 12) + "'>" + getNameById(StationId, resBase) + "</div>" +
+                                "时间： " + d.sta_time + "<br/>" +
                                 "溶解氧： " + d.sta_do_v + "<br/>")
-                                .style("left", (d3.event.pageX) + "px")
-                                .style("top", (d3.event.pageY + 20) + "px")
-                                .style("opacity", 1.0);
+                            .style("left", (d3.event.pageX) + "px")
+                            .style("top", (d3.event.pageY + 20) + "px")
+                            .style("opacity", 1.0);
                         break;
                     case "sta_an_v":
-                        tooltip.html("<div style='text-align:center;color:"+color(x)+"'>"+getNameById(StationId, resBase)+"</div>" +
-                                "时间： " + d.sta_time + "<br/>"+
+                        tooltip.html(
+                                "<div style='text-align:center;color:" + color((getRegion(resBase).indexOf(getBasinById(StationId, resBase))) % 12) + "'>" + getNameById(StationId, resBase) + "</div>" +
+                                "时间： " + d.sta_time + "<br/>" +
                                 "氨氮： " + d.sta_an_v + "<br/>")
-                                .style("left", (d3.event.pageX) + "px")
-                                .style("top", (d3.event.pageY + 20) + "px")
-                                .style("opacity", 1.0);
+                            .style("left", (d3.event.pageX) + "px")
+                            .style("top", (d3.event.pageY + 20) + "px")
+                            .style("opacity", 1.0);
                         break;
                     case "sta_toc_v":
-                        tooltip.html("<div style='text-align:center;color:"+color(x)+"'>"+getNameById(StationId, resBase)+"</div>" +
-                            "时间： " + d.sta_time + "<br/>"+
+                        tooltip.html(
+                                "<div style='text-align:center;color:" + color((getRegion(resBase).indexOf(getBasinById(StationId, resBase))) % 12) + "'>" + getNameById(StationId, resBase) + "</div>" +
+                                "时间： " + d.sta_time + "<br/>" +
                                 "高锰酸盐： " + d.sta_toc_v + "<br/>")
-                                .style("left", (d3.event.pageX) + "px")
-                                .style("top", (d3.event.pageY + 20) + "px")
-                                .style("opacity", 1.0);
+                            .style("left", (d3.event.pageX) + "px")
+                            .style("top", (d3.event.pageY + 20) + "px")
+                            .style("opacity", 1.0);
                         break;
                     case "sta_pp_v":
-                        tooltip.html("<div style='text-align:center;color:"+color(x)+"'>"+getNameById(StationId, resBase)+"</div>" +
-                                "时间： " + d.sta_time + "<br/>"+
+                        tooltip.html(
+                                "<div style='text-align:center;color:" + color((getRegion(resBase).indexOf(getBasinById(StationId, resBase))) % 12) + "'>" + getNameById(StationId, resBase) + "</div>" +
+                                "时间： " + d.sta_time + "<br/>" +
                                 "总有机碳： " + d.sta_pp_v + "<br/>")
-                                .style("left", (d3.event.pageX) + "px")
-                                .style("top", (d3.event.pageY + 20) + "px")
-                                .style("opacity", 1.0);
+                            .style("left", (d3.event.pageX) + "px")
+                            .style("top", (d3.event.pageY + 20) + "px")
+                            .style("opacity", 1.0);
                         break;
                 }
                 document.getElementById(d.sta_time + "monthChart").setAttribute("r", "8");

@@ -1,7 +1,6 @@
 function getRegionChart(view, width, height, resBase, resStation, type) {
     // body...
     d3.select("#" + view).selectAll('*').remove();
-    var color = d3.scaleOrdinal(d3.schemePaired);
     var res = getInfosByRegion(resBase, resStation);
     var riverRegion = getRegion(resBase);
     var index = [];
@@ -65,8 +64,8 @@ function getRegionChart(view, width, height, resBase, resStation, type) {
                     return "stroke:#dc3545";
                     break;
                 case "sta_pp_v":
-                     return "stroke:#17a2b8";
-                     break;
+                    return "stroke:#17a2b8";
+                    break;
             }
         });
 
@@ -101,15 +100,15 @@ function getRegionChart(view, width, height, resBase, resStation, type) {
             var circle = svg.append("g")
                 .append("circle")
                 .attr("fill", function() {
-                    return color(i);
+                    return color(i % 12);
                 })
                 .attr("id", function() {
                     return i + "_" + j + "_" + avg;
                 })
                 .attr("transform", function() {
-                    try{
+                    try {
                         return "translate(" + (xScale(i) + padding.left) + "," + (yScale(avg) + padding.top) + ")"
-                    }catch(err){
+                    } catch (err) {
                         console.log(err);
                     }
                 })
@@ -118,9 +117,9 @@ function getRegionChart(view, width, height, resBase, resStation, type) {
                     var x = this.id.split("_")[0];
                     var y = this.id.split("_")[1];
                     var avg = this.id.split("_")[2];
-                    tooltip.html("<div style='text-align:center;color:"+color(x)+"'>"+riverRegion[x] +"流域</div>" +
-                                 "地点 : " + getNameById(res[x][y][0].sta_id, resBase) + " <br/>"+
-                                "月平均值 ："+avg + "</br>" )
+                    tooltip.html("<div style='text-align:center;color:" + color(x % 12) + "'>" + riverRegion[x] + "流域</div>" +
+                            "地点 : " + getNameById(res[x][y][0].sta_id, resBase) + " <br/>" +
+                            "月平均值 ：" + avg + "</br>")
                         .style("left", (d3.event.pageX) + "px")
                         .style("top", (d3.event.pageY + 20) + "px")
                         .style("opacity", 1.0);
