@@ -1,11 +1,43 @@
-function getDate(date) {  
-    var y = date.getFullYear();  
-    var m = date.getMonth() + 1;  
-    m = m < 10 ? ('0' + m) : m;  
-    var d = date.getDate();  
-    d = d < 10 ? ('0' + d) : d;  
-    return y + '-' + m + '-' + d;  
-};  
+function getDate(date) {
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    m = m < 10 ? ('0' + m) : m;
+    var d = date.getDate();
+    d = d < 10 ? ('0' + d) : d;
+    return y + '-' + m + '-' + d;
+};
+
+function getNameById(id, res) {
+    // body...
+    for (var i = 0; i < res.length; i++) {
+        if (res[i].code == id) {
+            return res[i].name;
+        }
+    }
+}
+
+function getInfosByRegion(resBase, resStation) {
+    // body...
+    var regions = getRegion(resBase);
+    var infos = [];
+    for (var i = 0; i < regions.length; i++) {
+        var region = [];
+        for (var j = 0; j < resBase.length; j++) {
+            if (resBase[j].basin == regions[i]) {
+                var station = [];
+                for (var k = 0; k < resStation.length; k++) {
+                    if (resStation[k].sta_id == resBase[j].code) {
+                        station.push(resStation[k]);
+                    }
+                }
+                region.push(station);
+            }
+        }
+        infos.push(region);
+    }
+    return infos;
+}
+
 function maxValue(data, type) {
     return d3.max(data, function(d) {
         // body...

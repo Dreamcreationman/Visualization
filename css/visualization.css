@@ -175,3 +175,12 @@ input:focus {
 .tick text {
     fill: rgb(150, 150, 150);
 }
+
+.footer{
+    width: 100%;    
+    margin: 0 auto;
+    color: white;
+    position: absolute;
+    bottom: 5px;
+    text-align: center;
+}

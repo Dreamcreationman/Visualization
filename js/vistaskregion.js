@@ -1,40 +1,7 @@
-function getNameById(id, res) {
-    // body...
-    for (var i = 0; i < res.length; i++) {
-        if (res[i].code == id) {
-            return res[i].name;
-        }
-    }
-}
-
-function getInfosByRegion(resBase, resStation) {
-    // body...
-    var regions = getRegion(resBase);
-    var infos = [];
-    for (var i = 0; i < regions.length; i++) {
-        var region = [];
-        for (var j = 0; j < resBase.length; j++) {
-            if (resBase[j].basin == regions[i]) {
-                var station = [];
-                for (var k = 0; k < resStation.length; k++) {
-                    if (resStation[k].sta_id == resBase[j].code) {
-                        station.push(resStation[k]);
-                    }
-                }
-                region.push(station);
-            }
-        }
-        infos.push(region);
-    }
-    return infos;
-}
-
-
-
 function getRegionChart(view, width, height, resBase, resStation, type) {
     // body...
-     d3.select("#" + view).selectAll('*').remove();
-
+    d3.select("#" + view).selectAll('*').remove();
+    var color = d3.scaleOrdinal(d3.schemePaired);
     var res = getInfosByRegion(resBase, resStation);
     var riverRegion = getRegion(resBase);
     var index = [];
@@ -80,12 +47,34 @@ function getRegionChart(view, width, height, resBase, resStation, type) {
         .attr("id", function(d, i) {
             return i + "xAxis";
         });
+    d3.select("#" + view)
+        .select("#x")
+        .selectAll("line")
+        .attr("style", function() {
+            switch (type) {
+                case "sta_ph_v":
+                    return "stroke:#007bff";
+                    break;
+                case "sta_do_v":
+                    return "stroke:#28a745";
+                    break;
+                case "sta_an_v":
+                    return "stroke:#ffc107";
+                    break;
+                case "sta_toc_v":
+                    return "stroke:#dc3545";
+                    break;
+                case "sta_pp_v":
+                     return "stroke:#17a2b8";
+                     break;
+            }
+        });
 
     svg.append("g")
         .attr("class", "axis")
         .attr("id", "y")
         .attr("transform", function(d) {
-            return "translate(" + (padding.left-5) + "," + (padding.top) + ")";
+            return "translate(" + (padding.left - 5) + "," + (padding.top) + ")";
         })
         .call(yAxis);
     for (var i = 0; i < res.length; i++) {
@@ -112,42 +101,32 @@ function getRegionChart(view, width, height, resBase, resStation, type) {
             var circle = svg.append("g")
                 .append("circle")
                 .attr("fill", function() {
-                    switch (type) {
-                        case "sta_ph_v":
-                            return "#007bff";
-                            break;
-                        case "sta_do_v":
-                            return "#28a745";
-                            break;
-                        case "sta_an_v":
-                            return "#ffc107";
-                            break;
-                        case "sta_toc_v":
-                            return "#dc3545";
-                            break;
-                        case "sta_pp_v":
-                            return "#17a2b8";
-                            break;
-                    }
+                    return color(i);
                 })
-                .attr("id",function() {
-                    return i+"_"+j+"_"+avg;
+                .attr("id", function() {
+                    return i + "_" + j + "_" + avg;
                 })
                 .attr("transform", function() {
-                    return "translate(" + (xScale(i) + padding.left )+ "," + (yScale(avg)+ padding.top) + ")"
+                    try{
+                        return "translate(" + (xScale(i) + padding.left) + "," + (yScale(avg) + padding.top) + ")"
+                    }catch(err){
+                        console.log(err);
+                    }
                 })
                 .attr("r", 5)
                 .on("mouseover", function() {
                     var x = this.id.split("_")[0];
                     var y = this.id.split("_")[1];
                     var avg = this.id.split("_")[2];
-                    tooltip.html(avg+" " + riverRegion[x]+ " "+getNameById(res[x][y][0].sta_id, resBase)+" <br/>")
+                    tooltip.html("<div style='text-align:center;color:"+color(x)+"'>"+riverRegion[x] +"流域</div>" +
+                                 "地点 : " + getNameById(res[x][y][0].sta_id, resBase) + " <br/>"+
+                                "月平均值 ："+avg + "</br>" )
                         .style("left", (d3.event.pageX) + "px")
                         .style("top", (d3.event.pageY + 20) + "px")
                         .style("opacity", 1.0);
                     d3.select(this).transition()
-                                    .ease(d3.easeLinear)
-                                    .attr("r", "8");
+                        .ease(d3.easeLinear)
+                        .attr("r", "8");
                 })
                 .on("mouseomove", function() {
                     tooltip.style("left", (d3.event.pageX))
@@ -155,8 +134,8 @@ function getRegionChart(view, width, height, resBase, resStation, type) {
                 })
                 .on("mouseout", function() {
                     d3.select(this).transition()
-                                    .ease(d3.easeLinear)
-                                    .attr("r", "5");
+                        .ease(d3.easeLinear)
+                        .attr("r", "5");
                     tooltip.style("opacity", 0.0);
                 });;
         }
