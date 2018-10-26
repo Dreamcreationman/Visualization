@@ -87,19 +87,19 @@ function maxValue(data, type) {
         // body...
         switch (type) {
             case "sta_ph_v":
-                return d.sta_ph_v;
+                return parseInt(d.sta_ph_v);
                 break;
             case "sta_do_v":
-                return d.sta_do_v;
+                return parseInt(d.sta_do_v);
                 break;
             case "sta_an_v":
-                return d.sta_an_v;
+                return parseInt(d.sta_an_v);
                 break;
             case "sta_toc_v":
-                return d.sta_toc_v;
+                return parseInt(d.sta_toc_v);
                 break;
             case "sta_pp_v":
-                return d.sta_pp_v;
+                return parseInt(d.sta_pp_v);
                 break;
         }
     });
@@ -108,23 +108,23 @@ function maxValue(data, type) {
 function minValue(data, type) {
     return d3.min(data, function(d) {
         // body...
-        switch (type) {
-            case "sta_ph_v":
-                return d.sta_ph_v;
-                break;
-            case "sta_do_v":
-                return d.sta_do_v;
-                break;
-            case "sta_an_v":
-                return d.sta_an_v;
-                break;
-            case "sta_toc_v":
-                return d.sta_toc_v;
-                break;
-            case "sta_pp_v":
-                return d.sta_pp_v;
-                break;
-        }
+    	switch (type) {
+	        case "sta_ph_v":
+	            return parseInt(d.sta_ph_v);
+	            break;
+	        case "sta_do_v":
+	            return parseInt(d.sta_do_v);
+	            break;
+	        case "sta_an_v":
+	            return parseInt(d.sta_an_v);
+	            break;
+	        case "sta_toc_v":
+	            return parseInt(d.sta_toc_v);
+	            break;
+	        case "sta_pp_v":
+	            return parseInt(d.sta_pp_v);
+	            break;
+	    }
     });
 }
 
@@ -174,8 +174,7 @@ function exitfullscreen() { //退出全屏
 function fullscreen() {
     // body...
     var imgSource = document.getElementById("fullscreen").src;
-    console.log(imgSource);
-    if (imgSource == 'file:///C:/Users/Dream/Desktop/Visualization/img/fullscreen.png') {
+    if (imgSource.split("/")[imgSource.split("/").length-1] == 'fullscreen.png') {
         enterfullscreen();
     } else {
         exitfullscreen();

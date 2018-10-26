@@ -22,7 +22,7 @@ function showmap(container_id, width, height) {
 				.attr("width", width)
 				.attr("height", height);
 
-	d3.json("http://localhost:8080/VisTaskData/json/china.geo.json").then(function (res) {
+	d3.json("../../json/china.geo.json").then(function (res) {
 		// body...
 		var map = svg.append("g").attr("transform", "translate(0,0)");
 		map.selectAll("path")
@@ -62,7 +62,7 @@ function showmap(container_id, width, height) {
 				return d.properties.name;
 			});
 		var point = svg.append("g").attr("transform", "translate(0, 0)");
-		d3.csv("http://localhost:8080/VisTaskData/csv/WaterBase.csv").then(function (res) {	
+		d3.csv("../../csv/WaterBase.csv").then(function (res) {	
 				// body...
 			resBase = res;
 			point.selectAll("circle")
@@ -113,7 +113,6 @@ function showmap(container_id, width, height) {
 								.style("top", (d3.event.pageY+20));
 					})
 					.on("mouseout", function(d, i) {
-						console.log(this.id.split("-")[1]);
 						if (this.id.split("-")[1] == "unclicked") {
 							d3.select(this).transition()
 	                                    .ease(d3.easeLinear)

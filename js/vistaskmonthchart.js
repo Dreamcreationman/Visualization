@@ -3,7 +3,7 @@ function getMonthChart(viewId, width, height, stationId, time, resBase, type) {
     var stationChosenData = [];
 
     d3.select("#" + viewId).selectAll('*').remove();
-    d3.csv("http://localhost:8080/VisTaskData/csv/WaterStation.csv").then(function(res) {
+    d3.csv("../../csv/WaterStation.csv").then(function(res) {
         // body...
         resStation = res;
         for (var i = 0; i < res.length; i++)
@@ -19,10 +19,12 @@ function getMonthChart(viewId, width, height, stationId, time, resBase, type) {
         var xScale = d3.scaleLinear()
             .domain([1, 31])
             .range([0, width - padding.left - padding.right]);
+        var big = parseInt(maxValue(stationChosenData, type));
+        var small =  parseInt(minValue(stationChosenData, type));
         var yScale = d3.scaleLinear()
-            .domain([minValue(stationChosenData, type) == maxValue(stationChosenData, type) ? 0 : minValue(stationChosenData, type), maxValue(stationChosenData, type)])
+            .domain([small == big ? 0 : small, big])
             .range([height - padding.top - padding.bottom, 0]);
-
+       
         var xAxis = d3.axisBottom().scale(xScale);
         var yAxis = d3.axisLeft().scale(yScale);
 
